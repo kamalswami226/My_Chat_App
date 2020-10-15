@@ -1,0 +1,98 @@
+{
+  "project_info": {
+    "project_number": "313071839463",
+    "firebase_url": "https://learning-28524.firebaseio.com",
+    "project_id": "learning-28524",
+    "storage_bucket": "learning-28524.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:313071839463:android:f513811f7416965b4d5a42",
+        "android_client_info": {
+          "package_name": "com.icmi.learning"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "313071839463-gbl6nj9drka34an30g6n2cr4sgvhsfma.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYTyWHEJ2qZTG8LYOf3xe_ybpyrTr9QBc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "313071839463-gbl6nj9drka34an30g6n2cr4sgvhsfma.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:313071839463:android:89cd7dccf25905134d5a42",
+        "android_client_info": {
+          "package_name": "com.icmi.mychat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "313071839463-gbl6nj9drka34an30g6n2cr4sgvhsfma.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYTyWHEJ2qZTG8LYOf3xe_ybpyrTr9QBc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "313071839463-gbl6nj9drka34an30g6n2cr4sgvhsfma.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:313071839463:android:b34bcd525445d5874d5a42",
+        "android_client_info": {
+          "package_name": "com.icmi.todolist"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "313071839463-gbl6nj9drka34an30g6n2cr4sgvhsfma.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYTyWHEJ2qZTG8LYOf3xe_ybpyrTr9QBc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "313071839463-gbl6nj9drka34an30g6n2cr4sgvhsfma.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="50dp"
+        android:text="@string/enter_otp"
+        android:textColor="@color/blue_light"
+        android:textStyle="bold" />
+
+
+    <EditText
+        android:id="@+id/loginActivityOtpNumber"
+        tools:ignore="TextFields"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/textView3"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:gravity="center_vertical"
+        android:hint="@string/enter_otp"
+        android:inputType="number"
+        android:textSize="14sp"
+        />
+
+    <ImageButton
+        android:id="@+id/loginActivityLoginButton"
+        tools:ignore="ContentDescription"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_below="@id/loginActivityOtpNumber"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="150dp"
+        android:background="@drawable/green_rounded_background"
+        android:elevation="4dp"
+        android:fadingEdgeLength="2dp"
+        android:padding="12dp"
+        android:scaleType="fitXY"
+        android:layout_marginBottom="6dp"
+        android:src="@drawable/ic_baseline_arrow_forward_24" />
+
+</RelativeLayout>

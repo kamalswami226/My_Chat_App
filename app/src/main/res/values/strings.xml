@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">My Chat</string>
+    <string name="welcome">Welcome</string>
+    <string name="please_sign_in_to_continue">Please Sign-in to continue</string>
+    <string name="phone_number">PHONE NUMBER</string>
+    <string name="enter_your_contact">Enter your contact</string>
+    <string name="_91">+91</string>
+    <string name="enter_otp">Enter OTP</string>
+    <string name="complete_profile">COMPLETE PROFILE</string>
+    <string name="upload_your_profile_picture">Upload your profile picture</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+</resources>
