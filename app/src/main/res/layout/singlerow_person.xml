@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/singlerow_person_image"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/profile_icon"
+        app:civ_border_color="@color/blue_dark"
+        />
+
+    <TextView
+        android:id="@+id/singlerow_person_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/singlerow_person_image"
+        android:layout_marginStart="16dp"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="@string/david_brains"
+        />
+
+    <TextView
+        android:id="@+id/singlerow_person_lastMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/singlerow_person_image"
+        android:layout_below="@id/singlerow_person_name"
+        android:layout_marginStart="16dp"
+        android:textSize="12sp"
+        android:textColor="@color/gray"
+        android:layout_marginTop="8dp"
+        android:text="@string/hello_kamal"/>
+
+    <TextView
+        android:id="@+id/singlerow_person_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textColor="@color/gray"
+        android:layout_alignParentEnd="true"
+        android:text="@string/today"
+        tools:ignore="RelativeOverlap" />
+
+</RelativeLayout>

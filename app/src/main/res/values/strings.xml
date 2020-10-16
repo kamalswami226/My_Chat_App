@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Chat</string>
+    <string name="app_name">Hello Chat</string>
     <string name="welcome">Welcome</string>
     <string name="please_sign_in_to_continue">Please Sign-in to continue</string>
     <string name="phone_number">PHONE NUMBER</string>
@@ -10,4 +10,10 @@
     <string name="upload_your_profile_picture">Upload your profile picture</string>
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
+    <string name="hello_chat">Hello Chat</string>
+    <string name="navigationimage">NavigationImage</string>
+    <string name="searchicon">SearchIcon</string>
+    <string name="david_brains">David Brains</string>
+    <string name="hello_kamal">Hello Kamal!</string>
+    <string name="today">Today</string>
 </resources>
