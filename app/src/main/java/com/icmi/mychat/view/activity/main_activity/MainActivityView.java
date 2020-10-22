@@ -6,7 +6,7 @@ import com.icmi.mychat.view.common.view.ViewObservable;
 public interface MainActivityView extends ViewObservable<MainActivityView.Listener> {
 
     interface Listener {
-
+        void onSelectContactButtonClicked();
     }
 
 }

@@ -1,4 +1,4 @@
-package com.icmi.mychat.view.fragments;
+package com.icmi.mychat.view.fragments.CreateProfile;
 
 import android.net.Uri;
 import android.text.TextUtils;
@@ -8,12 +8,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-
 import com.icmi.mychat.R;
 import com.icmi.mychat.schemas.ProfileModel;
-import com.icmi.mychat.view.common.activity.BaseActivity;
-import com.icmi.mychat.view.common.activity.BaseFragment;
 import com.icmi.mychat.view.common.view.BaseView;
+
 
 import de.hdodenhof.circleimageview.CircleImageView;
 

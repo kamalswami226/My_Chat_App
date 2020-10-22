@@ -1,4 +1,4 @@
-package com.icmi.mychat.view.fragments;
+package com.icmi.mychat.view.fragments.CreateProfile;
 
 
 import android.net.Uri;

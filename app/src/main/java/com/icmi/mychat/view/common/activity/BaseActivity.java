@@ -12,11 +12,11 @@ public class BaseActivity extends AppCompatActivity {
 
     private PresentationRoot mPresentationRoot;
 
-    protected PresentationRoot getCompositionRoot() {
+    public PresentationRoot getCompositionRoot() {
         if (mPresentationRoot == null)
             mPresentationRoot = new PresentationRoot(
                     getAppCompositionRoot(),
-                    getSupportFragmentManager(),
+                    this,
                     LayoutInflater.from(this)
             );
 

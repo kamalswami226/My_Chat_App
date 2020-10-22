@@ -7,9 +7,14 @@ import androidx.annotation.Nullable;
 
 import com.icmi.mychat.view.activity.login_activity.LoginView;
 import com.icmi.mychat.view.activity.login_activity.LoginViewImpl;
+import com.icmi.mychat.view.activity.main_activity.MainActivityView;
+import com.icmi.mychat.view.activity.main_activity.MainActivityViewImpl;
 import com.icmi.mychat.view.common.view.ViewMVC;
-import com.icmi.mychat.view.fragments.CreateFragmentView;
-import com.icmi.mychat.view.fragments.CreateFragmentViewImpl;
+import com.icmi.mychat.view.fragments.AddContact.SelectContactFragment;
+import com.icmi.mychat.view.fragments.AddContact.SelectContactView;
+import com.icmi.mychat.view.fragments.AddContact.SelectContactViewImpl;
+import com.icmi.mychat.view.fragments.CreateProfile.CreateFragmentView;
+import com.icmi.mychat.view.fragments.CreateProfile.CreateFragmentViewImpl;
 
 public class ViewFactory {
 
@@ -25,8 +30,14 @@ public class ViewFactory {
         if (viewClass == LoginView.class) {
             view = new LoginViewImpl(mLayoutInflater, container);
         }
+        else if (viewClass == MainActivityView.class) {
+            view = new MainActivityViewImpl(mLayoutInflater, container);
+        }
         else if (viewClass == CreateFragmentView.class) {
             view = new CreateFragmentViewImpl(mLayoutInflater, container);
+        }
+        else if (viewClass == SelectContactView.class) {
+            view = new SelectContactViewImpl(mLayoutInflater, container);
         }
         else {
             throw new IllegalArgumentException("Unsupported class " + viewClass);

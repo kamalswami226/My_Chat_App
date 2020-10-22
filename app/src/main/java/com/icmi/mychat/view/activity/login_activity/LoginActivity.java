@@ -1,20 +1,16 @@
 package com.icmi.mychat.view.activity.login_activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.widget.Toast;
 
 import com.icmi.mychat.R;
-import com.icmi.mychat.common.ViewFactory;
 import com.icmi.mychat.networking.LoginUseCase;
 import com.icmi.mychat.view.activity.main_activity.MainActivity;
 import com.icmi.mychat.view.common.activity.BaseActivity;
-import com.icmi.mychat.view.fragments.CreateProfileFragment;
+import com.icmi.mychat.view.fragments.CreateProfile.CreateProfileFragment;
 
 public class LoginActivity extends BaseActivity implements LoginView.Listener, LoginUseCase.Listener{
 
@@ -33,7 +29,6 @@ public class LoginActivity extends BaseActivity implements LoginView.Listener, L
         setContentView(mLoginView.getRootView());
 
         mLoginUseCase = getCompositionRoot().getLoginUseCase();
-        Log.d("LOGIN_TAG", "ACTIVITY -> " + mLoginUseCase);
     }
 
 

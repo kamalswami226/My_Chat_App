@@ -1,4 +1,4 @@
-package com.icmi.mychat.view.fragments;
+package com.icmi.mychat.view.fragments.CreateProfile;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,8 +12,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.icmi.mychat.common.presentation_root.PresentationRoot;
 import com.icmi.mychat.networking.LoginUseCase;
 import com.icmi.mychat.schemas.ProfileModel;
+import com.icmi.mychat.view.activity.login_activity.LoginActivity;
 import com.icmi.mychat.view.common.activity.BaseFragment;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -31,18 +33,20 @@ public class CreateProfileFragment extends BaseFragment implements CreateFragmen
     private CreateFragmentView mCreateFragmentView;
     private LoginUseCase mLoginUseCase;
 
+    private PresentationRoot getCompositionRoot() {
+        return ((LoginActivity) requireActivity()).getCompositionRoot();
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mLoginUseCase = getCompositionRoot().getLoginUseCase();
-        Log.d("LOGIN_TAG", "FRAGMENT -> " + mLoginUseCase);
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mCreateFragmentView = getCompositionRoot().getViewFactory().newInstance(CreateFragmentView.class, container);
-
 
         mCreateFragmentView.registerListener(this);
         return mCreateFragmentView.getRootView();

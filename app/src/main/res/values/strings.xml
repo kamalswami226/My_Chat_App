@@ -16,4 +16,5 @@
     <string name="david_brains">David Brains</string>
     <string name="hello_kamal">Hello Kamal!</string>
     <string name="today">Today</string>
+    <string name="select_contact">Select Contact</string>
 </resources>

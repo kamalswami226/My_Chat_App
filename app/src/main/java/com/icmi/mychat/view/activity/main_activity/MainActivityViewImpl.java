@@ -25,13 +25,20 @@ public class MainActivityViewImpl extends BaseView<MainActivityView.Listener> im
         setRootView(inflater.inflate(R.layout.activity_main, container, false));
 
         initViews();
-
+        setupClickListeners();
     }
 
 
     @Override
     public void onClick(View v) {
+        if (v.getId() == R.id.mainActivityFloatingActionButton) {
+            notifyFloatingActionButtonClicked();
+        }
+    }
 
+    private void notifyFloatingActionButtonClicked() {
+        for (Listener listener : getListeners())
+            listener.onSelectContactButtonClicked();
     }
 
     @Override
@@ -48,6 +55,9 @@ public class MainActivityViewImpl extends BaseView<MainActivityView.Listener> im
         mRecyclerView = findViewById(R.id.mainActivityRecyclerView);
     }
 
+    private void setupClickListeners() {
+        findViewById(R.id.mainActivityFloatingActionButton).setOnClickListener(this);
+    }
 
     public static class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHolder> {
 

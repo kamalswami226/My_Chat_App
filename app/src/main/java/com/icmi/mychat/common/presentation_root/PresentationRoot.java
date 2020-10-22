@@ -1,23 +1,40 @@
 package com.icmi.mychat.common.presentation_root;
 
 import android.view.LayoutInflater;
-
-import androidx.fragment.app.FragmentManager;
-
+import androidx.fragment.app.FragmentActivity;
 import com.icmi.mychat.common.ViewFactory;
 import com.icmi.mychat.common.composition_root.CompositionRoot;
+import com.icmi.mychat.common.permissions.Permissionhelper;
+import com.icmi.mychat.networking.FetchContactsUseCase;
 import com.icmi.mychat.networking.LoginUseCase;
 
 public class PresentationRoot {
 
     private final CompositionRoot mCompositionRoot;
-    private final FragmentManager mFragmentManager;
+    private final FragmentActivity mActivity;
     private final LayoutInflater mLayoutInflater;
 
-    public PresentationRoot(CompositionRoot mCompositionRoot, FragmentManager mFragmentManager, LayoutInflater mLayoutInflater) {
+    private Permissionhelper mPermissionHelper;
+
+    public PresentationRoot(CompositionRoot mCompositionRoot, FragmentActivity mActivity, LayoutInflater mLayoutInflater) {
         this.mCompositionRoot = mCompositionRoot;
-        this.mFragmentManager = mFragmentManager;
+        this.mActivity = mActivity;
         this.mLayoutInflater = mLayoutInflater;
+    }
+
+    public FragmentActivity getActivity() {
+        return mActivity;
+    }
+
+    public Permissionhelper getPermissionHelper() {
+        if (mPermissionHelper == null)
+            mPermissionHelper = new Permissionhelper(getActivity());
+
+        return mPermissionHelper;
+    }
+
+    public FetchContactsUseCase getFetchContactUseCase() {
+        return new FetchContactsUseCase(mActivity);
     }
 
     public LoginUseCase getLoginUseCase() {
