@@ -13,6 +13,8 @@ import com.icmi.mychat.view.common.view.ViewMVC;
 import com.icmi.mychat.view.fragments.AddContact.SelectContactFragment;
 import com.icmi.mychat.view.fragments.AddContact.SelectContactView;
 import com.icmi.mychat.view.fragments.AddContact.SelectContactViewImpl;
+import com.icmi.mychat.view.fragments.Chat.ChatFragmentImpl;
+import com.icmi.mychat.view.fragments.Chat.ChatView;
 import com.icmi.mychat.view.fragments.CreateProfile.CreateFragmentView;
 import com.icmi.mychat.view.fragments.CreateProfile.CreateFragmentViewImpl;
 
@@ -38,6 +40,9 @@ public class ViewFactory {
         }
         else if (viewClass == SelectContactView.class) {
             view = new SelectContactViewImpl(mLayoutInflater, container);
+        }
+        else if (viewClass == ChatView.class) {
+            view = new ChatFragmentImpl(mLayoutInflater, container);
         }
         else {
             throw new IllegalArgumentException("Unsupported class " + viewClass);

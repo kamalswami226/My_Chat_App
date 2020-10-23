@@ -1,8 +1,6 @@
 package com.icmi.mychat.view.fragments.AddContact;
 
-import android.Manifest;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,7 +60,6 @@ public class SelectContactFragment extends BaseFragment implements Permissionhel
 
     private void requestContactPermission() {
         if (!mPermissionHelper.hasPermission(MyPermission.READ_CONTACT)) {
-            Toast.makeText(getContext(), "Permission not found", Toast.LENGTH_SHORT).show();
             mPermissionHelper.requestPermission(MyPermission.READ_CONTACT, READ_CONTACT_CODE);
         }
     }
@@ -100,8 +97,8 @@ public class SelectContactFragment extends BaseFragment implements Permissionhel
         mPermissionHelper.registerListener(this);
         mSelectContactView.registerListener(this);
         mFetchContactUsecase.registerListener(this);
-        requestContactPermission();
         mFetchContactUsecase.getAllContactsFromPhone();
+        requestContactPermission();
 
     }
 

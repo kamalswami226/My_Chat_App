@@ -5,9 +5,11 @@
     <color name="colorAccent">#03DAC5</color>
 
 
-    <color name="green">#41CAC6</color>
-    <color name="blue_light">#4C98CF</color>
-    <color name="blue_dark">#4873A6</color>
+    <color name="green">#8FBF60</color>
+    <color name="green_light">#A6D95B</color>
+    <color name="blue_light">#27B9F2</color>
+    <color name="blue_dark">#0597F2</color>
+    <color name="background">#D0E9F2</color>
     <color name="purple_light">#5C538C</color>
     <color name="purple_dark">#524365</color>
 

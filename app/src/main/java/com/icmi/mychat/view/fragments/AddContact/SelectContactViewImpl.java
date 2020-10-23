@@ -1,32 +1,23 @@
 package com.icmi.mychat.view.fragments.AddContact;
 
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.icmi.mychat.R;
-import com.icmi.mychat.schemas.PersonModel;
 import com.icmi.mychat.schemas.ProfileModel;
 import com.icmi.mychat.view.common.view.BaseView;
-
 import java.util.ArrayList;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.icmi.mychat.view.fragments.AddContact.SelectContactViewImpl.SelectContactAdapter.*;
 
 public class SelectContactViewImpl extends BaseView<SelectContactView.Listener> implements SelectContactView {
 
-    private RecyclerView mRecyclerView;
     private SelectContactAdapter mAdapter;
-    private ImageView mBackButton, mSearchButton;
+   // private ImageView mBackButton, mSearchButton;
 
     public SelectContactViewImpl(LayoutInflater inflater, ViewGroup container) {
         setRootView(inflater.inflate(R.layout.fragment_select_contact, container, false));
@@ -49,7 +40,7 @@ public class SelectContactViewImpl extends BaseView<SelectContactView.Listener> 
     }
 
     private void initViews() {
-        mRecyclerView = findViewById(R.id.selectContactRecyclerview);
+        RecyclerView mRecyclerView = findViewById(R.id.selectContactRecyclerview);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new SelectContactAdapter(this::notifyOnPersonClicked);
         mRecyclerView.setAdapter(mAdapter);
@@ -84,9 +75,9 @@ public class SelectContactViewImpl extends BaseView<SelectContactView.Listener> 
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             holder.personName.setText(mPersonList.get(position).getName());
-            if (!TextUtils.isEmpty(mPersonList.get(position).getProfileUrl())) {
+            /*if (!TextUtils.isEmpty(mPersonList.get(position).getProfileUrl())) {
                 //TODO : LOAD USER IMAGE
-            }
+            }*/
 
             holder.itemView.setOnClickListener(v -> mListener.onItemClicked(mPersonList.get(position)));
 
@@ -115,7 +106,7 @@ public class SelectContactViewImpl extends BaseView<SelectContactView.Listener> 
         public static class ViewHolder extends RecyclerView.ViewHolder {
 
             TextView personName;
-            CircleImageView personImage;
+           // CircleImageView personImage;
 
             public ViewHolder(@NonNull View itemView) {
                 super(itemView);
