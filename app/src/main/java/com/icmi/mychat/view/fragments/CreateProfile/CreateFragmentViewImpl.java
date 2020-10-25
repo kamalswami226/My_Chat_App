@@ -13,6 +13,8 @@ import com.icmi.mychat.schemas.ProfileModel;
 import com.icmi.mychat.view.common.view.BaseView;
 
 
+import java.util.ArrayList;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CreateFragmentViewImpl extends BaseView<CreateFragmentView.Listener> implements CreateFragmentView, View.OnClickListener {
@@ -87,7 +89,8 @@ public class CreateFragmentViewImpl extends BaseView<CreateFragmentView.Listener
         return new ProfileModel(
           mFirstName.getText().toString() + mLastName.getText().toString(),
           "",
-          ""
+          "",
+                new ArrayList<>()
         );
     }
 

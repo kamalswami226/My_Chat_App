@@ -13,7 +13,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.icmi.mychat.R;
 import com.icmi.mychat.schemas.MessageModel;
 import com.icmi.mychat.view.common.utils.Constants;
@@ -27,7 +26,7 @@ public class ChatFragmentImpl extends BaseView<ChatView.Listener> implements Cha
     View mParentLayout;
     EditText mInputMessage;
     ImageView mSendMessage, mInputMicrophone;
-    ChatAdapter mAdapter;
+    MessagesAdapter mAdapter;
     RecyclerView mRecyclerView;
 
     public ChatFragmentImpl(LayoutInflater layoutInflater, ViewGroup container) {
@@ -50,6 +49,9 @@ public class ChatFragmentImpl extends BaseView<ChatView.Listener> implements Cha
 
     private void attachViewListeners() {
         mInputMessage.addTextChangedListener(messageTextWatcher);
+        mSendMessage.setOnClickListener(this);
+        mInputMicrophone.setOnClickListener(this);
+        findViewById(R.id.chat_fragment_back_button).setOnClickListener(this);
     }
 
     TextWatcher messageTextWatcher = new TextWatcher() {
@@ -74,9 +76,24 @@ public class ChatFragmentImpl extends BaseView<ChatView.Listener> implements Cha
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.input_send) {
-            if(messageIsNotEmpty())
+            if (messageIsNotEmpty())
                 notifyMessageSendButtonClicked();
+            showThisMessageToScreen();
         }
+        else if (v.getId() == R.id.chat_fragment_back_button)
+            notifyBackButtonClicked();
+    }
+
+    private void showThisMessageToScreen() {
+        MessageModel localMessage = new MessageModel();
+        localMessage.setMessage(mInputMessage.getText().toString());
+        localMessage.setSenderId(Constants.MY_ID);
+        mAdapter.addNewMessage(localMessage);
+    }
+
+    private void notifyBackButtonClicked() {
+        for (Listener listener : getListeners())
+            listener.onBackButtonClicked();
     }
 
     private void notifyMessageSendButtonClicked() {
@@ -108,16 +125,25 @@ public class ChatFragmentImpl extends BaseView<ChatView.Listener> implements Cha
     private void setupRecyclerView() {
         mRecyclerView = findViewById(R.id.chat_fragment_recyclerview);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mAdapter = new ChatAdapter();
+        mAdapter = new MessagesAdapter(new ArrayList<>());
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    public static class ChatAdapter extends RecyclerView.Adapter {
+    @Override
+    public void bindMessage(MessageModel message) {
+        mAdapter.addNewMessage(message);
+    }
 
-        private ArrayList<MessageModel> mMessageList = new ArrayList<>();
+
+    public static class MessagesAdapter extends RecyclerView.Adapter {
+
+        private ArrayList<MessageModel> mMessageList;
+
+        public MessagesAdapter(ArrayList<MessageModel> messagesList) {
+            this.mMessageList = messagesList;
+        }
 
         public static class MsgSentViewHolder extends RecyclerView.ViewHolder {
-
             TextView message;
 
             public MsgSentViewHolder(@NonNull View itemView) {
@@ -127,7 +153,6 @@ public class ChatFragmentImpl extends BaseView<ChatView.Listener> implements Cha
         }
 
         public static class MsgRecViewHolder extends RecyclerView.ViewHolder {
-
             TextView message;
 
             public MsgRecViewHolder(@NonNull View itemView) {
@@ -136,41 +161,23 @@ public class ChatFragmentImpl extends BaseView<ChatView.Listener> implements Cha
             }
         }
 
+
         @NonNull
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view;
-            switch (viewType) {
-                case Constants.MSG_SENT_TYPE:
-                    view = LayoutInflater.from(parent.getContext()).inflate(R.layout.sr_msg_sent_type, parent, false);
-                    return new MsgSentViewHolder(view);
-                case Constants.MSG_REC_TYPE:
-                    view = LayoutInflater.from(parent.getContext()).inflate(R.layout.sr_msg_rec_type, parent, false);
-                    return new MsgRecViewHolder(view);
-            }
-            return null;
-        }
-
-        @Override
-        public int getItemViewType(int position) {
-            switch (mMessageList.get(position).getType()) {
-                case Constants.MSG_SENT_TYPE:
-                    return Constants.MSG_SENT_TYPE;
-                case Constants.MSG_REC_TYPE:
-                    return Constants.MSG_REC_TYPE;
-                default:
-                    return -1;
-            }
+            if (viewType == Constants.MSG_SENT_TYPE)
+                return new MsgSentViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.sr_msg_sent_type, parent, false));
+            else
+                return new MsgRecViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.sr_msg_rec_type, parent, false));
         }
 
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-            switch (mMessageList.get(position).getType()) {
-                case Constants.MSG_SENT_TYPE:
-                    ((MsgSentViewHolder) holder).message.setText(mMessageList.get(position).getMessage());
-                case Constants.MSG_REC_TYPE:
-                    ((MsgRecViewHolder) holder).message.setText(mMessageList.get(position).getMessage());
-            }
+            if (mMessageList.get(position).getSenderId().equalsIgnoreCase(Constants.MY_ID))
+                ((MsgSentViewHolder) holder).message.setText(mMessageList.get(position).getMessage());
+            else
+                ((MsgRecViewHolder) holder).message.setText(mMessageList.get(position).getMessage());
         }
 
         @Override
@@ -178,6 +185,25 @@ public class ChatFragmentImpl extends BaseView<ChatView.Listener> implements Cha
             return mMessageList.size();
         }
 
+        @Override
+        public int getItemViewType(int position) {
+            if (mMessageList.get(position).getSenderId().equalsIgnoreCase(Constants.MY_ID))
+                return Constants.MSG_SENT_TYPE;
+            else
+                return Constants.MSG_REC_TYPE;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        public void addNewMessage(MessageModel message) {
+            mMessageList.add(message);
+            notifyDataSetChanged();
+        }
+
     }
+
 
 }

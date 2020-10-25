@@ -44,7 +44,8 @@ public class FetchContactsUseCase extends BaseObservable<FetchContactsUseCase.Li
                 while (cursor.moveToNext()) {
                     mProfileList.add(new ProfileModel(cursor.getString(nameIndex),
                             "",
-                            cursor.getString(numberIndex)));
+                            cursor.getString(numberIndex),
+                            null));
 
                 }
             } finally {

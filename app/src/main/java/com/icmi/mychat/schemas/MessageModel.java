@@ -6,16 +6,18 @@ public class MessageModel {
     private long time;
     private int type;
     private boolean seen;
+    private String senderId;
 
 
     public MessageModel() {
     }
 
-    public MessageModel(String message, long time, int type, boolean seen) {
+    public MessageModel(String message, long time, int type, boolean seen, String senderId) {
         this.message = message;
         this.time = time;
         this.type = type;
         this.seen = seen;
+        this.senderId = senderId;
     }
 
     public String getMessage() {
@@ -48,5 +50,13 @@ public class MessageModel {
 
     public void setSeen(boolean seen) {
         this.seen = seen;
+    }
+
+    public String getSenderId() {
+        return senderId;
+    }
+
+    public void setSenderId(String senderId) {
+        this.senderId = senderId;
     }
 }

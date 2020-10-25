@@ -18,9 +18,16 @@ public class References {
                 .document(USER_ID);
     }
 
-    public static CollectionReference profileNodeReference() {
-        return FirebaseFirestore.getInstance().collection("USERS");
+    public static DocumentReference profileNodeReference(String friendId) {
+        return FirebaseFirestore.getInstance().collection("USERS")
+                .document(friendId);
     }
 
+    public static CollectionReference messagesReference() {
+        return FirebaseFirestore.getInstance().collection("MESSAGES");
+    }
 
+    public static CollectionReference chatReference(String uniqueChatId) {
+        return messagesReference().document(uniqueChatId).collection("CHAT");
+    }
 }

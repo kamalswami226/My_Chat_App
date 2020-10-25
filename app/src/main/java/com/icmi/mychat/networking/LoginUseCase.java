@@ -11,6 +11,7 @@ import com.icmi.mychat.common.BaseObservable;
 import com.icmi.mychat.schemas.ProfileModel;
 import com.icmi.mychat.view.common.utils.References;
 
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 public class LoginUseCase extends BaseObservable<LoginUseCase.Listener> {
@@ -99,7 +100,8 @@ public class LoginUseCase extends BaseObservable<LoginUseCase.Listener> {
         return new ProfileModel(
                 name,
                 profileUrl,
-                mPhoneNumber
+                mPhoneNumber,
+                new ArrayList<>()
         );
     }
 
