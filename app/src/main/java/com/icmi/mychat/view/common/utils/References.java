@@ -9,9 +9,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class References {
 
-    @SuppressWarnings("ConstantConditions")
     @NonNull
     public static final String USER_ID = FirebaseAuth.getInstance().getUid();
+
+    public static CollectionReference profileReference() {
+        return FirebaseFirestore.getInstance().collection("USERS");
+    }
 
     public static DocumentReference myProfileReference() {
         return FirebaseFirestore.getInstance().collection("USERS")

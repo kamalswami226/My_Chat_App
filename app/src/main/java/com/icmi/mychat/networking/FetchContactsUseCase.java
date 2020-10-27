@@ -3,22 +3,38 @@ package com.icmi.mychat.networking;
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.provider.ContactsContract;
+import android.util.Log;
 
 import androidx.fragment.app.FragmentActivity;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.icmi.mychat.common.BaseObservable;
 import com.icmi.mychat.schemas.ProfileModel;
+import com.icmi.mychat.view.common.utils.References;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Nullable;
 
 public class FetchContactsUseCase extends BaseObservable<FetchContactsUseCase.Listener> {
 
-    private FragmentActivity mActivity;
+    private final FragmentActivity mActivity;
 
     private ArrayList<ProfileModel> mProfileList;
 
     public interface Listener {
         void onContactListLoaded(ArrayList<ProfileModel> profileList);
+
+        void onAppActiveUsers(@Nullable ProfileModel profileList);
+
+        void onNoActiveUserFound(String message);
+
         void onError(String errorMessage);
     }
 
@@ -52,11 +68,36 @@ public class FetchContactsUseCase extends BaseObservable<FetchContactsUseCase.Li
                 cursor.close();
             }
         }
-        if (mProfileList.size() > 0)
+        if (mProfileList.size() > 0) {
             notifyAllContactsLoaded();
-        else
+            getActiveContactsOnApp();
+        } else
             notifyNoContactsFound();
 
+    }
+
+    public void getActiveContactsOnApp() {
+        for (ProfileModel profile : mProfileList)
+            References.profileReference().whereEqualTo("contact", profile.getContact().trim()).get()
+                    .addOnSuccessListener(queryDocumentSnapshots -> notifyListOfActiveUsersFound(getUserProfileFromSnapshot(queryDocumentSnapshots))
+                    ).addOnFailureListener(this::notifyNoActiveUserFound);
+    }
+
+    private ProfileModel getUserProfileFromSnapshot(QuerySnapshot queryDocumentSnapshots) {
+        for (DocumentSnapshot ds : queryDocumentSnapshots)
+            return ds.toObject(ProfileModel.class);
+        return null;
+    }
+
+
+    private void notifyListOfActiveUsersFound(ProfileModel userModelsFromObjectList) {
+        for (Listener listener : getListeners())
+            listener.onAppActiveUsers(userModelsFromObjectList);
+    }
+
+    private void notifyNoActiveUserFound(Exception e) {
+        for (Listener listener : getListeners())
+            listener.onNoActiveUserFound(e.getMessage());
     }
 
     private void notifyAllContactsLoaded() {

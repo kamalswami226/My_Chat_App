@@ -3,9 +3,7 @@ package com.icmi.mychat.view.activity.login_activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
-
 import com.icmi.mychat.R;
 import com.icmi.mychat.networking.LoginUseCase;
 import com.icmi.mychat.view.activity.main_activity.MainActivity;

@@ -1,6 +1,7 @@
 package com.icmi.mychat.view.fragments.AddContact;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +25,7 @@ public class SelectContactFragment extends BaseFragment implements Permissionhel
     Permissionhelper mPermissionHelper;
     SelectContactView mSelectContactView;
     FetchContactsUseCase mFetchContactUsecase;
-    private Listener mListener;
+    private final Listener mListener;
 
     public static final int READ_CONTACT_CODE = 100;
 
@@ -82,8 +83,19 @@ public class SelectContactFragment extends BaseFragment implements Permissionhel
 
     @Override
     public void onContactListLoaded(ArrayList<ProfileModel> profileList) {
-        for (ProfileModel profile : profileList)
+        /*for (ProfileModel profile : profileList)
+            mSelectContactView.bindItem(profile);*/
+    }
+
+    @Override
+    public void onAppActiveUsers(@Nullable ProfileModel profile) {
+        if (profile != null)
             mSelectContactView.bindItem(profile);
+    }
+
+    @Override
+    public void onNoActiveUserFound(String message) {
+        Log.d("TAG", "onNoActiveUserFound: " + message);
     }
 
     @Override
@@ -119,9 +131,13 @@ public class SelectContactFragment extends BaseFragment implements Permissionhel
     }
 
     @Override
+    public void onBackButtonClicked() {
+        getFragmentManager().beginTransaction().remove(SelectContactFragment.this).commit();
+    }
+
+    @Override
     public void onPersonClicked(ProfileModel person) {
         mListener.onAddNewContact(person);
-        //noinspection ConstantConditions
         getFragmentManager().beginTransaction().remove(SelectContactFragment.this).commit();
     }
 }

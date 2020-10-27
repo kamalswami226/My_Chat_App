@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 
 
-public class SelectContactViewImpl extends BaseView<SelectContactView.Listener> implements SelectContactView {
+public class SelectContactViewImpl extends BaseView<SelectContactView.Listener> implements SelectContactView, View.OnClickListener {
 
     private SelectContactAdapter mAdapter;
    // private ImageView mBackButton, mSearchButton;
@@ -22,6 +22,8 @@ public class SelectContactViewImpl extends BaseView<SelectContactView.Listener> 
     public SelectContactViewImpl(LayoutInflater inflater, ViewGroup container) {
         setRootView(inflater.inflate(R.layout.fragment_select_contact, container, false));
         initViews();
+        setupRecyclerview();
+        attachViewListeners();
     }
 
     @Override
@@ -40,6 +42,14 @@ public class SelectContactViewImpl extends BaseView<SelectContactView.Listener> 
     }
 
     private void initViews() {
+
+    }
+
+    private void attachViewListeners() {
+        findViewById(R.id.selectContactBackButton).setOnClickListener(this);
+    }
+
+    private void setupRecyclerview() {
         RecyclerView mRecyclerView = findViewById(R.id.selectContactRecyclerview);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new SelectContactAdapter(this::notifyOnPersonClicked);
@@ -49,6 +59,17 @@ public class SelectContactViewImpl extends BaseView<SelectContactView.Listener> 
     private void notifyOnPersonClicked(ProfileModel person) {
         for (Listener listener : getListeners())
             listener.onPersonClicked(person);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.selectContactBackButton)
+            notifyBackButtonClicked();
+    }
+
+    private void notifyBackButtonClicked() {
+        for (Listener listener : getListeners())
+            listener.onBackButtonClicked();
     }
 
 
