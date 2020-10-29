@@ -5,14 +5,24 @@ public class ChatHistoryModel {
     private String friendId;
     private String hisProfileImage;
     private String chatReference;
+    private String name;
 
     public ChatHistoryModel() {
     }
 
-    public ChatHistoryModel(String friendId, String hisProfileImage, String chatReference) {
+    public ChatHistoryModel(String friendId, String hisProfileImage, String chatReference, String name) {
         this.friendId = friendId;
         this.hisProfileImage = hisProfileImage;
         this.chatReference = chatReference;
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getFriendId() {

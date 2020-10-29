@@ -1,8 +1,5 @@
 package com.icmi.mychat.networking;
 
-import android.util.Log;
-
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
@@ -38,11 +35,11 @@ public class SendMessageUsecase extends BaseObservable<SendMessageUsecase.Listen
         }).addOnFailureListener(this::notifyMessageSendingFailed);
     }
 
-    public void sendFirstMessage(String message, String to) {
+    public void sendFirstMessage(String message, String to, String friendName, String myName) {
         final String UNIQURE_CHAT_ID = UUID.randomUUID().toString().substring(0, 10);
         WriteBatch batch = FirebaseFirestore.getInstance().batch();
-        batch.update(References.myProfileReference(), "chats", FieldValue.arrayUnion(generateFriendChatReference(to, UNIQURE_CHAT_ID)));
-        batch.update(References.profileNodeReference(to), "chats", FieldValue.arrayUnion(generateMyChatReference(UNIQURE_CHAT_ID)));
+        batch.update(References.myProfileReference(), "chats", FieldValue.arrayUnion(generateFriendChatReference(to, UNIQURE_CHAT_ID, friendName)));
+        batch.update(References.profileNodeReference(to), "chats", FieldValue.arrayUnion(generateMyChatReference(UNIQURE_CHAT_ID, myName)));
         batch.set(References.chatReference(UNIQURE_CHAT_ID).document(), generateMessageModel(message));
         batch.commit().addOnSuccessListener((eVoid) -> notifyMessageSentSuccessfully())
                 .addOnFailureListener(this::notifyMessageSendingFailed);
@@ -78,19 +75,21 @@ public class SendMessageUsecase extends BaseObservable<SendMessageUsecase.Listen
         );
     }
 
-    private ChatHistoryModel generateMyChatReference(String UNIQUE_CHAT_ID) {
+    private ChatHistoryModel generateMyChatReference(String UNIQUE_CHAT_ID, String myName) {
         return new ChatHistoryModel(
                 FirebaseAuth.getInstance().getUid(),
                 "",
-                UNIQUE_CHAT_ID
+                UNIQUE_CHAT_ID,
+                myName
         );
     }
 
-    private ChatHistoryModel generateFriendChatReference(String to, String UNIQUE_CHAT_ID) {
+    private ChatHistoryModel generateFriendChatReference(String to, String UNIQUE_CHAT_ID, String mName) {
         return new ChatHistoryModel(
                 to,
                 "",
-                UNIQUE_CHAT_ID
+                UNIQUE_CHAT_ID,
+                mName
         );
     }
 

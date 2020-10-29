@@ -20,6 +20,8 @@ import com.icmi.mychat.view.common.view.BaseView;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 @SuppressWarnings("ALL")
 public class ChatFragmentImpl extends BaseView<ChatView.Listener> implements ChatView, View.OnClickListener {
 
@@ -28,6 +30,8 @@ public class ChatFragmentImpl extends BaseView<ChatView.Listener> implements Cha
     ImageView mSendMessage, mInputMicrophone;
     MessagesAdapter mAdapter;
     RecyclerView mRecyclerView;
+    TextView mName;
+    CircleImageView mProfileImage;
 
     public ChatFragmentImpl(LayoutInflater layoutInflater, ViewGroup container) {
         setRootView(layoutInflater.inflate(R.layout.fragment_chat, container, false));
@@ -120,6 +124,8 @@ public class ChatFragmentImpl extends BaseView<ChatView.Listener> implements Cha
         mInputMessage = mParentLayout.findViewById(R.id.input_text);
         mSendMessage = mParentLayout.findViewById(R.id.input_send);
         mInputMicrophone = mParentLayout.findViewById(R.id.input_audio);
+        mName = findViewById(R.id.chat_fragment_name);
+        mProfileImage = findViewById(R.id.chat_fragment_profile_image);
     }
 
     private void setupRecyclerView() {
@@ -132,6 +138,11 @@ public class ChatFragmentImpl extends BaseView<ChatView.Listener> implements Cha
     @Override
     public void bindMessage(MessageModel message) {
         mAdapter.addNewMessage(message);
+    }
+
+    @Override
+    public void showUser(String name, String image) {
+        mName.setText(name);
     }
 
 

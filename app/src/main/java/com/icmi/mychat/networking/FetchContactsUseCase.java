@@ -3,22 +3,13 @@ package com.icmi.mychat.networking;
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.provider.ContactsContract;
-import android.util.Log;
-
 import androidx.fragment.app.FragmentActivity;
-
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.icmi.mychat.common.BaseObservable;
 import com.icmi.mychat.schemas.ProfileModel;
 import com.icmi.mychat.view.common.utils.References;
-
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.annotation.Nullable;
 
@@ -84,8 +75,11 @@ public class FetchContactsUseCase extends BaseObservable<FetchContactsUseCase.Li
     }
 
     private ProfileModel getUserProfileFromSnapshot(QuerySnapshot queryDocumentSnapshots) {
-        for (DocumentSnapshot ds : queryDocumentSnapshots)
-            return ds.toObject(ProfileModel.class);
+        for (DocumentSnapshot ds : queryDocumentSnapshots) {
+            ProfileModel profile = ds.toObject(ProfileModel.class);
+            profile.setId(ds.getId());
+            return profile;
+        }
         return null;
     }
 

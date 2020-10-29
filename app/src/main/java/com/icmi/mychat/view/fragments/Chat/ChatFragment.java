@@ -23,14 +23,19 @@ public class ChatFragment extends BaseFragment implements ChatView.Listener, Sen
     private SendMessageUsecase mSendMessageUseCase;
     private String LOCAL_UNIQUE_ID = "";
     private String LOCAL_FRIEND_ID = "";
+    private String mName, mImageUrl;
     private boolean isNewChat = false;
 
     //public static final String ARGS_UNIQUE_ID = "ARGS_UNIQUE_ID";
     public static final String ARGS_FRIEND_ID = "ARGS_FRIEND_ID";
+    public static final String ARGS_FRIEND_NAME = "ARGS_FRIEND_NAME";
+    public static final String ARGS_FRIEND_IMAGE = "ARGS_FRIEND_IMAGE";
 
-    public static Fragment newInstance(String UNIQUE_FRIEND_ID) {
+    public static Fragment newInstance(String UNIQUE_FRIEND_ID, String NAME, String IMAGE) {
         Bundle args = new Bundle(1);
         args.putString(ARGS_FRIEND_ID, UNIQUE_FRIEND_ID);
+        args.putString(ARGS_FRIEND_NAME, NAME);
+        args.putString(ARGS_FRIEND_IMAGE, IMAGE);
         Fragment fragment = new ChatFragment();
         fragment.setArguments(args);
         return fragment;
@@ -46,22 +51,23 @@ public class ChatFragment extends BaseFragment implements ChatView.Listener, Sen
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mChatView = getCompositionRoot().getViewFactory().newInstance(ChatView.class, container);
-        //noinspection ConstantConditions
         LOCAL_FRIEND_ID = getArguments().getString(ARGS_FRIEND_ID);
+        mName = getArguments().getString(ARGS_FRIEND_NAME);
+        mImageUrl = getArguments().getString(ARGS_FRIEND_IMAGE);
+        mChatView.showUser(mName, mImageUrl);
         checkIfNewChat();
         return mChatView.getRootView();
     }
 
     @Override
     public void onBackButtonClicked() {
-        //noinspection ConstantConditions
         getFragmentManager().beginTransaction().remove(ChatFragment.this).commit();
     }
 
     @Override
     public void onSendMessageButtonClicked(String message) {
         if (isNewChat)
-            mSendMessageUseCase.sendFirstMessage(message, LOCAL_FRIEND_ID);
+            mSendMessageUseCase.sendFirstMessage(message, LOCAL_FRIEND_ID, mName, getCompositionRoot().getProfile().getName());
         else
             mSendMessageUseCase.sendMessage(message, LOCAL_UNIQUE_ID);
     }

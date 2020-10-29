@@ -6,6 +6,7 @@ import com.icmi.mychat.common.ViewFactory;
 import com.icmi.mychat.common.composition_root.CompositionRoot;
 import com.icmi.mychat.common.permissions.Permissionhelper;
 import com.icmi.mychat.networking.FetchContactsUseCase;
+import com.icmi.mychat.networking.FetchRecentChatsUseCase;
 import com.icmi.mychat.networking.LoginUseCase;
 import com.icmi.mychat.networking.SendMessageUsecase;
 import com.icmi.mychat.networking.UserProfileUsecase;
@@ -38,6 +39,10 @@ public class PresentationRoot {
 
     public FetchContactsUseCase getFetchContactUseCase() {
         return new FetchContactsUseCase(mActivity);
+    }
+
+    public FetchRecentChatsUseCase getRecentChatUseCase() {
+        return new FetchRecentChatsUseCase();
     }
 
     public LoginUseCase getLoginUseCase() {

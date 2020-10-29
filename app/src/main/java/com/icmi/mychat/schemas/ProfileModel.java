@@ -1,5 +1,7 @@
 package com.icmi.mychat.schemas;
 
+import com.google.firebase.firestore.Exclude;
+
 import java.util.ArrayList;
 
 public class ProfileModel {
@@ -8,6 +10,7 @@ public class ProfileModel {
     private String profileUrl;
     private String contact;
     private ArrayList<ChatHistoryModel> chats;
+    private String id;
 
     public ProfileModel() {
     }
@@ -17,6 +20,15 @@ public class ProfileModel {
         this.profileUrl = profileUrl;
         this.contact = contact;
         this.chats = chats;
+    }
+
+    @Exclude
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {

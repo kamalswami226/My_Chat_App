@@ -1,14 +1,21 @@
 package com.icmi.mychat.view.activity.main_activity;
 
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.internal.NavigationMenuItemView;
+import com.google.android.material.navigation.NavigationView;
 import com.icmi.mychat.R;
+import com.icmi.mychat.schemas.ChatHistoryModel;
 import com.icmi.mychat.schemas.PersonModel;
 import com.icmi.mychat.view.common.view.BaseView;
 
@@ -20,6 +27,8 @@ public class MainActivityViewImpl extends BaseView<MainActivityView.Listener> im
 
     private RecyclerView mRecyclerView;
     private ChatListAdapter mAdapter;
+    private DrawerLayout mDrawerLayout;
+
 
     public MainActivityViewImpl(LayoutInflater inflater, ViewGroup container) {
         setRootView(inflater.inflate(R.layout.activity_main, container, false));
@@ -33,7 +42,24 @@ public class MainActivityViewImpl extends BaseView<MainActivityView.Listener> im
     public void onClick(View v) {
         if (v.getId() == R.id.mainActivityFloatingActionButton) {
             notifyFloatingActionButtonClicked();
+        } else if (v.getId() == R.id.mainActivityNavigationButton) {
+            openDrawer();
         }
+    }
+
+    private void openDrawer() {
+        if (mDrawerLayout.isDrawerOpen(GravityCompat.START))
+            mDrawerLayout.openDrawer(GravityCompat.START);
+    }
+
+    private void closeDrawer() {
+        if (!mDrawerLayout.isDrawerOpen(GravityCompat.START))
+            mDrawerLayout.closeDrawer(GravityCompat.START);
+    }
+
+    private void notifyLogoutButtonClicked() {
+        for (Listener listener : getListeners())
+            listener.onLogoutButtonClicked();
     }
 
     private void notifyFloatingActionButtonClicked() {
@@ -53,15 +79,41 @@ public class MainActivityViewImpl extends BaseView<MainActivityView.Listener> im
 
     private void initViews() {
         mRecyclerView = findViewById(R.id.mainActivityRecyclerView);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mAdapter = new ChatListAdapter();
+        mRecyclerView.setAdapter(mAdapter);
+        mDrawerLayout = findViewById(R.id.mainActivityDrawerLayout);
     }
 
     private void setupClickListeners() {
         findViewById(R.id.mainActivityFloatingActionButton).setOnClickListener(this);
+        findViewById(R.id.mainActivityNavigationButton).setOnClickListener(this);
+        ((NavigationView) findViewById(R.id.navigation_view)).setNavigationItemSelectedListener(navigationItemClickListener);
+    }
+
+    NavigationView.OnNavigationItemSelectedListener navigationItemClickListener = item -> {
+        if (item.getItemId() == R.id.menu_profile) {
+
+        } else if (item.getItemId() == R.id.menu_calls) {
+
+        } else if (item.getItemId() == R.id.menu_contacts) {
+
+        } else if (item.getItemId() == R.id.menu_group) {
+
+        } else if (item.getItemId() == R.id.menu_logout) {
+            notifyLogoutButtonClicked();
+        }
+        return false;
+    };
+
+    @Override
+    public void bindRecentChat(ChatHistoryModel chat) {
+        mAdapter.addContact(chat);
     }
 
     public static class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHolder> {
 
-        ArrayList<PersonModel> mPersonList = new ArrayList<>();
+        ArrayList<ChatHistoryModel> mPersonList = new ArrayList<>();
 
         @NonNull
         @Override
@@ -89,7 +141,7 @@ public class MainActivityViewImpl extends BaseView<MainActivityView.Listener> im
             return mPersonList.size();
         }
 
-        public void addContact(PersonModel person) {
+        public void addContact(ChatHistoryModel person) {
             mPersonList.add(person);
             notifyDataSetChanged();
         }

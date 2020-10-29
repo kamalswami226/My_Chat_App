@@ -12,5 +12,6 @@ public interface ChatView extends ViewObservable<ChatView.Listener> {
 
     //void attachListenerToMessages(String UNIQUE_CHAT_ID);
     void bindMessage(MessageModel message);
+    void showUser(String name, String image);
 
 }
