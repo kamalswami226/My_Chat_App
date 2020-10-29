@@ -9,6 +9,7 @@ public interface MainActivityView extends ViewObservable<MainActivityView.Listen
     interface Listener {
         void onSelectContactButtonClicked();
         void onLogoutButtonClicked();
+        void onPersonClicked(ChatHistoryModel person);
     }
 
     void bindRecentChat(ChatHistoryModel chat);

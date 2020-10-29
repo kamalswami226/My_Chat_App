@@ -61,6 +61,15 @@ public class MainActivity extends BaseActivity implements MainActivityView.Liste
     }
 
     @Override
+    public void onPersonClicked(ChatHistoryModel person) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .replace(R.id.main_fragment_container, ChatFragment.newInstance(person.getFriendId(), person.getName(), person.getHisProfileImage()))
+                .commit();
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
         if (FirebaseAuth.getInstance().getCurrentUser() == null) {

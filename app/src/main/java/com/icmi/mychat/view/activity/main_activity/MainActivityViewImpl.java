@@ -1,7 +1,6 @@
 package com.icmi.mychat.view.activity.main_activity;
 
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -12,11 +11,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.internal.NavigationMenuItemView;
 import com.google.android.material.navigation.NavigationView;
 import com.icmi.mychat.R;
 import com.icmi.mychat.schemas.ChatHistoryModel;
-import com.icmi.mychat.schemas.PersonModel;
 import com.icmi.mychat.view.common.view.BaseView;
 
 import java.util.ArrayList;
@@ -80,9 +77,14 @@ public class MainActivityViewImpl extends BaseView<MainActivityView.Listener> im
     private void initViews() {
         mRecyclerView = findViewById(R.id.mainActivityRecyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mAdapter = new ChatListAdapter();
+        mAdapter = new ChatListAdapter(this::notifyPersonClicked);
         mRecyclerView.setAdapter(mAdapter);
         mDrawerLayout = findViewById(R.id.mainActivityDrawerLayout);
+    }
+
+    private void notifyPersonClicked(ChatHistoryModel person) {
+        for (Listener listener : getListeners())
+            listener.onPersonClicked(person);
     }
 
     private void setupClickListeners() {
@@ -113,7 +115,18 @@ public class MainActivityViewImpl extends BaseView<MainActivityView.Listener> im
 
     public static class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHolder> {
 
-        ArrayList<ChatHistoryModel> mPersonList = new ArrayList<>();
+        private final ArrayList<ChatHistoryModel> mPersonList = new ArrayList<>();
+
+        public ChatListAdapter(Listener mListener) {
+            this.mListener = mListener;
+        }
+
+        public interface Listener {
+            void onPersonClicked(ChatHistoryModel person);
+        }
+
+        private final Listener mListener;
+
 
         @NonNull
         @Override
@@ -124,6 +137,8 @@ public class MainActivityViewImpl extends BaseView<MainActivityView.Listener> im
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             holder.personName.setText(mPersonList.get(position).getName());
+
+            holder.itemView.setOnClickListener(v -> mListener.onPersonClicked(mPersonList.get(position)));
         }
 
         @Override
